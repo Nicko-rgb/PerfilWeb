@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}Aptitudes{% endblock %}
+
+{% block body %}
+<div class='formacion'>
+    <div class="formacion-content">
+        <h2>APTITUDES</h2>
+        <!-- Mostrar las aptitudes -->
+        {% if aptitudes %}
+            {% for aptitud in aptitudes %}
+            <div class='box' >
+                <span class='num'>{{ loop.index }}</span>
+                <p class='sub_txt'>{{ aptitud.nombre }}</p>
+                <p><span >Nivel:</span> {{ aptitud.nivel }}</p>
+                {% if aptitud.detalles %}
+                <p><span>Detalles:</span> {{ aptitud.detalles | replace('\n', '<br>') | safe }}</p>
+                {% endif %}
+                <i class="bi bi-trash3" data-toggle="modal" data-target="#confirmDeleteModal{{ aptitud.id }}"></i>
+                <i class="bi bi-pencil-square" data-toggle="modal" data-target="#editModal{{ aptitud.id }}"></i>
+            </div>
+
+            <!-- Modal de Confirmación de Borrado -->
+            <div class="modal fade" id="confirmDeleteModal{{ aptitud.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ aptitud.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteModalLabel{{ aptitud.id }}">Confirmar Borrado</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <p class='txt_del'>
+                            ¿Estás seguro de que deseas borrar esta aptitud?
+                        </p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a href="{{ url_for('delete_aptitud', id=aptitud.id) }}" class="btn btn-danger">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Edición -->
+            <div class="modal fade" id="editModal{{ aptitud.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ aptitud.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="{{ url_for('edit_aptitud', id=aptitud.id) }}" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel{{ aptitud.id }}">Editar Aptitud</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Campos del formulario prellenados -->
+                                <div class='form-group'>
+                                    <label for='nombre'>Nombre de la Aptitud</label>
+                                    <input type='text' name='nombre' value='{{ aptitud.nombre }}' class='form-control' required>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='nivel'>Nivel</label>
+                                    <select name='nivel' class='form-control' required>
+                                        <option value="{{ aptitud.nivel }}">{{ aptitud.nivel }}</option>  <!-- Muestra el nivel actual -->
+                                        {% if aptitud.nivel != 'Básico' %}
+                                        <option value="Básico">Básico</option>{% endif %}
+                                        {% if aptitud.nivel != 'Intermedio' %}
+                                        <option value="Intermedio">Intermedio</option>{% endif %}
+                                        {% if aptitud.nivel != 'Avanzado' %}
+                                        <option value="Avanzado">Avanzado</option>{% endif %}
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control'>{{ aptitud.detalles }}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type='submit' class='btn btn-primary'>Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        {% endfor %}
+        {% else %}
+            <p>No hay datos disponibles.</p>
+        {% endif %}
+
+        <div class='btns'>
+            <button class='btn-edit' data-toggle='modal' data-target='#addAptitudModal'><i class="bi bi-plus-square-dotted"></i> AGREGAR</button>
+            <button type="button" onclick="volver()" class="volver"> < VOLVER</button>        
+            <!-- Modal para Agregar Nueva Aptitud -->
+            <div class='modal fade' id='addAptitudModal' tabindex='-1' role='dialog' aria-labelledby='addAptitudModalLabel' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                    <form action="{{ url_for('add_aptitud') }}" method='POST'>
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h5 class='modal-title' id='addAptitudModalLabel'>Agregar Nueva Aptitud</h5>
+                                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                <div class='form-group'>
+                                    <label for='nombre'>Nombre de la Aptitud</label>
+                                    <input type='text' name='nombre' class='form-control' required>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='nivel'>Nivel</label>
+                                    <select name='nivel' class='form-control' required>
+                                        <option value="Básico">Básico</option>
+                                        <option value="Intermedio">Intermedio</option>
+                                        <option value="Avanzado">Avanzado</option>
+                                    </select>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control'></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Agregar Aptitud</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para volver a la página anterior -->
+    <script>
+        function volver() {
+            window.location.href = "/home";
+        }
+    </script>
+    {% block scripts %}
+    <!-- Aquí puedes incluir scripts específicos para esta plantilla -->
+    {% endblock %}
+</div>
+
+{% endblock %}

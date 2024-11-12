@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}Experiencia{% endblock %}
+
+{% block body %}
+<div class='formacion'>
+    <div class="formacion-content">
+        <h2>EXPERIENCIA LABORAL</h2>
+
+        {% if experiencias %}
+            {% for experiencia in experiencias %}
+            <div class='box'>
+                <span class='num'>{{ loop.index }}</span>
+                <p class='sub_txt'>{{ experiencia.empresa }}</p>
+                <div class='fechas'>
+                    <p><span>Del:</span> {{ experiencia.fecha_inicio }}</p>
+                    <p><span>Al:</span> {{ experiencia.fecha_fin if experiencia.fecha_fin else 'Actualidad' }}</p>
+                </div>
+                <p><span>Puesto:</span> {{ experiencia.puesto }}</p>
+                <p class='detalle'><span>Detalle:</span> {{ experiencia.detalles | replace('\n', '<br>') | safe }}</p>
+
+                <!-- Iconos para editar y borrar -->
+                <i class="bi bi-trash3" data-toggle="modal" data-target="#confirmDeleteModal{{ experiencia.id }}"></i>
+                <i class="bi bi-pencil-square" data-toggle="modal" data-target="#editModal{{ experiencia.id }}"></i>
+            </div>
+
+            <!-- Modal de Confirmación de Borrado -->
+            <div class="modal fade" id="confirmDeleteModal{{ experiencia.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ experiencia.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteModalLabel{{ experiencia.id }}">Confirmar Borrado</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <p class='txt_del'>
+                            ¿Estás seguro de que deseas borrar esta experiencia laboral?
+                        </p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a href="{{ url_for('delete_experience', id=experiencia.id) }}" class="btn btn-danger">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Edición -->
+            <div class="modal fade" id="editModal{{ experiencia.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ experiencia.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="{{ url_for('edit_experience', id=experiencia.id) }}" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel{{ experiencia.id }}">Editar Experiencia Laboral</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class='form-group'>
+                                    <label for='empresa'>Nombre de la Empresa</label>
+                                    <input type='text' name='empresa' value='{{ experiencia.empresa }}' class='form-control' required>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='puesto'>Puesto</label>
+                                    <input type='text' name='puesto' value='{{ experiencia.puesto }}' class='form-control' required>
+                                </div>
+                                <div class='div'>
+                                    <label for='fecha_inicio'>Fecha de Inicio
+                                        <input type='date' name='fecha_inicio' value="{{ experiencia.fecha_inicio }}" class='form-control' required>
+                                    </label>
+                                    <label for='fecha_fin'>Fecha de Fin
+                                        <input type='date' name='fecha_fin' value="{{ experiencia.fecha_fin }}" class='form-control'>
+                                    </label>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control'>{{ experiencia.detalles }}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type='submit' class='btn btn-primary'>Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay datos disponibles.</p>
+        {% endif %}
+        <div class='btns'>
+
+            <!-- Botón para Agregar Nueva Experiencia -->
+            <button class='btn-edit' data-toggle='modal' data-target='#addExperienceModal'>
+                <i class="bi bi-plus-square-dotted"></i> AGREGAR
+            </button>
+
+            <!-- Modal para Agregar Nueva Experiencia -->
+            <div class='modal fade' id='addExperienceModal' tabindex='-1' role='dialog' aria-labelledby='addExperienceModalLabel' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                    <form action="{{ url_for('add_experience') }}" method='POST'>
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h5 class='modal-title' id='addExperienceModalLabel'>Agregar Nueva Experiencia Laboral</h5>
+                                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                <div class='form-group'>
+                                    <label for='empresa'>Nombre de la Empresa</label>
+                                    <input type='text' name='empresa' class='form-control' required>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='puesto'>Puesto</label>
+                                    <input type='text' name='puesto' class='form-control' required>
+                                </div>
+                                <div class='div'>
+                                    <label for='fecha_inicio'>Fecha de Inicio
+                                        <input type='date' name='fecha_inicio' class='form-control' required>
+                                    </label>
+                                    <label for='fecha_fin'>Fecha de Fin
+                                        <input type='date' name='fecha_fin' class='form-control'>
+                                    </label>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control'></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón Volver -->
+            <button type="button" onclick="volver()" class="volver">< VOLVER</button>
+        </div>
+    </div>
+
+    <!-- Script para volver a la página anterior -->
+    <script>
+        function volver() {
+            window.location.href = "/home";
+        }
+    </script>
+
+    {% block scripts %}
+    <!-- Aquí puedes incluir scripts específicos para esta plantilla -->
+    {% endblock %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,776 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'poppins';
+    color: white;
+}
+
+body {
+    background-color: #242424;
+    margin: 0;
+    height: 100vh;
+}
+
+/*ESTYLOS PARA EL LOGIN */
+.login-form {
+    padding: 20px 10px;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.login-form .container {
+    max-width: 400px;
+    background-color: #1c1c1c;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgb(24, 97, 255);
+    transition: .3s ease;
+}
+
+.login-form .container:hover {
+    box-shadow: 0 0 10px rgb(24, 97, 255);
+}
+
+.login-form h2 {
+    font-weight: 700;
+    text-shadow: 0 0 3px rgb(226, 1, 151), 0 0 3px rgb(226, 1, 151);
+}
+
+.login-form label {
+    width: 100%;
+    text-align: left;
+    color: white;
+}
+
+.login-form .bi-person {
+    position: absolute;
+    right: 8px;
+    color: white;
+    top: 37px;
+    font-size: 20px;
+}
+
+.login-form input {
+    width: 100%;
+    padding: 6px;
+    border-radius: 0;
+    font-size: 16px;
+    font-family: 'poppins';
+    color: white;
+    background-color: #242424;
+    border: none;
+    box-shadow: 0 0 1px #007bff, 0 0 1px #007bff;
+}
+
+.login-form input:focus {
+    outline: #007bff;
+    border: #007bff solid 1px;
+    box-shadow: none;
+    background-color: #242424;
+    color: white;
+}
+
+.login-form .mb-3 {
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.login-form button {
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 0 3px rgb(24, 97, 255);
+    transition: .3s ease;
+    border: none;
+    font-weight: 600;
+}
+
+.login-form button:hover {
+    background-color: rgb(8, 66, 191);
+    border: none;
+}
+
+/*ESTYLOS PARA HOME*/
+.home {
+    position: relative;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+.home .btn-sesion{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgb(201, 48, 48);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 140px;
+    padding: 5px 0;
+    cursor: pointer;
+}
+.home .hell {
+    font-size: 26px;
+    font-weight: 600;
+    font-family: Comic Sans MS;
+    text-shadow: 0 0 3px rgb(226, 1, 151), 0 0 3px rgb(226, 1, 151), 0 0 3px rgb(226, 1, 151);
+}
+.home .perfil-foto{
+    position: relative;
+}
+.home .perfil-foto .bi-pencil{
+    position: absolute;
+    right: 12px;
+    bottom: 20px;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    background-color: #242424;
+    box-shadow: 0 0 3px aqua, 0 0 3px aqua;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+    color: aqua;
+}
+.home .perfil-foto .bi-pencil:hover{
+    background-color: #333;
+    box-shadow: 0 0 6px #007bff;
+}
+.home img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: aqua 0 0 3px, 0 0 3px aqua;
+}
+.home .iconos{
+    display: flex;
+    gap: 13px;
+    position: relative;
+}
+.home .iconos .bi{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    box-shadow: 0 0 2px, 0 0 2px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+.home .img-ico{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 5px;
+    color: rgb(226, 1, 151);
+    cursor: pointer;
+    transition: .3s ease;
+}
+.home .bi-whatsapp{
+    color: green;
+}
+.home .bi-facebook{
+    color: #007bff;
+}
+.home .bi-github {
+    color: white;
+}
+.home .iconos .bi:hover, .img-ico:hover {
+    box-shadow: 0 0 7px, 0 0 7px;
+    transform: scale(1.02);
+}
+.home .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    box-shadow: 0 0 1px rgb(226, 1, 151);
+    padding: 10px;
+    gap: 15px;
+    background-color: #1c1c1c;
+}
+
+.home .menu a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 0 2px #007bff, 0 0 2px #007bff;
+    border-radius: 4px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 15px;
+    transition: .3s ease;
+    font-family: 'Roboto', sans-serif;
+}
+
+.home .menu a:hover {
+    background-color: #0262c9;
+    border: none;
+    box-shadow: 0 0 4px #007bff, 0 0 4px #007bff;
+    transform: scale(1.03);
+}
+
+.home .menu a:focus {
+    border: none;
+    outline: none;
+}
+
+.home .descripcion {
+    margin-top: 20px;
+    box-shadow: 0 0 1px aqua;
+    max-width: 700px;
+    width: 100%;
+    min-height: 100;
+    height: auto;
+    padding: 10px;
+    background-color: #1c1c1c;
+    position: relative;
+}
+
+.home .descripcion #descripcionText {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+.home .descripcion .h5{
+    font-weight: 500;
+    font-size: 16px;
+    color: white;
+    font-family: 'poppins';
+    text-decoration: underline;
+}
+.home #descripcionInput{
+    color: white;
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    background-color: #2d2c2c;
+    margin-top: 10px;
+    outline: #007bff;
+    border: none;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif;
+    box-shadow: 0 0 1px rgb(226, 1, 151), 0 0 1px rgb(226, 1, 151) ;
+}
+.home #descripcionInput:focus{
+    border: rgb(226, 1, 151) solid 1px;
+    box-shadow: none;
+}
+.home .h-btn {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+.home .save-des{
+    background: #007bff;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 120px;
+    color: white;
+    font-weight: bold;
+}
+.home .save-des:hover{
+    box-shadow: 0 0 5px #007bff;
+}
+.home .bi-check2-all{
+    margin-right: 5px;
+}
+.home .descripcion .bi-pencil-square{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px aqua, 0 0 1px aqua;
+    width: 33px;
+    height: 33px;
+    display: grid;
+    place-items: center;
+    color: aqua;
+    padding: 2px;
+    font-size: 18px;
+    transition: .3s ease;
+    cursor: pointer;
+}
+.home .descripcion .bi-pencil-square:hover{
+    box-shadow: 0 0 5px;
+}
+.home .pie {
+    background-color: #1c1c1c;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+    box-shadow: #007bff 0 0 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+
+/*ESTYLOS PARA EL MODAL*/
+.formacion {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formacion .formacion-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 700px;
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    box-shadow: 0 0 1px rgb(226, 1, 151);
+}
+
+.formacion .formacion-content h2 {
+    text-align: center;
+    font-weight: 550;
+    font-size: 18px;
+    margin: 0;
+    font-family: Comic Sans MS;
+    text-shadow: 0 0 3px rgb(226, 1, 151), 0 0 3px rgb(226, 1, 151);
+}
+
+.formacion .formacion-content .box {
+    box-shadow: 0 0 1px aqua, 0 0 1px aqua;
+    border-radius: 5px;
+    border-radius: 0;
+    position: relative;
+    padding: 10px;
+    background-color: #1c1c1c;
+    padding-bottom: 45px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.formacion .box .bi {
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    font-size: 16px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.formacion .formacion-content .bi-trash3 {
+    right: 5px;
+    bottom: 5px;
+    color: red;
+    box-shadow: 0 0 1px red, 0 0 1px red;
+}
+
+.formacion .formacion-content .bi-pencil-square {
+    right: 50px;
+    bottom: 5px;
+    color: aqua;
+    box-shadow: 0 0 1px aqua, 0 0 1px aqua;
+}
+.formacion .formacion-content .bi:hover{
+    box-shadow: 0 0 5px;
+}
+.formacion .box .num{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    top: -10px;
+    left: -9px;
+    background-color: #1c1c1c;
+    font-size: 10px;
+    color: white;
+}
+.formacion .box .fechas {
+    display: flex;
+    gap: 20px;
+    padding-left: 20px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+.formacion .box .fechas p{
+    font-size: 13px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+.formacion .box p{
+    font-size: 16px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+
+}
+.formacion .box span{
+    color: rgb(226, 1, 151);
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}
+.formacion .box .sub_txt{
+    font-weight: 570;
+    font-size: 15px;
+    text-shadow: 0 0 2px #007bff, 0 0 2px #007bff;
+    text-decoration: underline;
+    font-family: 'poppins';
+    text-transform: uppercase;
+}
+
+.formacion .formacion-content .btns {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+}
+
+.formacion .btns button {
+    width: 150px;
+    border: none;
+    padding: 7px 0;
+    border-radius: 5px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    transition: .3s ease;
+}
+
+.formacion .btn-edit {
+    background: #007bff;
+    color: rgb(215, 230, 230);
+}
+
+.formacion .btns .volver {
+    background-color: rgb(210, 210, 210);
+    color: black;
+}
+.formacion .btns .btn-edit:hover{
+    box-shadow: 0 0 5px #007bff;
+    transform: scale(1.03);
+}
+.formacion .btns .volver:hover{
+    box-shadow: 0 0 5px rgb(210, 210, 210);
+    transform: scale(1.03);
+}
+.formacion .btns button:focus {
+    box-shadow: none;
+    outline: none;
+    border: none;
+}
+
+/*STYLOS DE CONTACT */
+.contact {
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e; 
+    padding: 20px 10px;
+    display: flex;
+}
+.contact .contact-content {
+    width: 100%;
+    height: 100%;
+}
+.contact .me{
+    max-width: 400px;
+    width: 100%;
+    background-color: #1c1c1c;
+    box-shadow: 0 0 3px rgb(226, 1, 151);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
+.contact .me h4{
+    text-align: center;
+}
+.contact .me img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.contact .me div{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    position: relative;
+}
+.contact .me .bi-pencil {
+    position: absolute;
+    right: 5px;
+    top: -50px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #1c1c1c;
+    color: aqua;
+    box-shadow: 0 0 2px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+.contact .me .bi-pencil:hover{
+    background-color: #1c1c1c;
+    box-shadow: 0 0 4px;
+}
+.contact .me p{
+    width: 100%;
+    position: relative;
+    transition: .3s ease;
+    cursor: pointer;
+}
+.contact .me p:hover{
+    background-color: #333;
+}
+.contact .me .bi{
+    position: absolute;
+    right: 5px;
+}
+.contact .me button {
+    margin-top: 10px;
+    background-color: #007bff; /* Color del botón de enviar */
+    color: white;padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    width: 130px;
+    transition: .3s ease;
+}
+.contact .me button:hover{
+    box-shadow: 0 0 4px #007bff, 0 0 4px #007bff;
+}
+.contact .me button:focus{
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+.contact .frm{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    background-color: #1c1c1c8a;
+}
+.contact .form-c{
+    max-width: 550px;
+    width: 100%;
+    box-shadow: 0 0 3px rgb(226, 1, 151);
+    margin: auto;
+    padding: 20px;
+    background-color: #1c1c1c;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.contact .contact-content h2{
+    text-align: center;
+    font-weight: 550;
+    font-size: 24px;
+    margin: 0;
+    font-family: Comic Sans MS;
+    text-shadow: 0 0 3px #007bff, 0 0 3px #007bff;
+    text-transform: uppercase;
+}
+
+.contact .contact-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.contact .div {
+    display: flex;
+    gap: 15px;
+}
+.contact .contact-content input[type="text"],
+input[type="email"], input[type='tel'] {
+    width: 100%; 
+    padding: 8px;
+    border: none;
+    background-color: #333;
+    color: #ffffff; 
+    box-shadow: 0 0 1px gray, 0 0 1px gray;
+}
+.contact .contact-content form textarea {
+    width: 100%; 
+    padding: 8px;
+    min-height: 80px;
+    border: none;
+    background-color: #333;
+    color: #ffffff; 
+    box-shadow: 0 0 1px gray, 0 0 1px gray;
+}
+.contact form label {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.contact input[type="text"]:focus,
+input[type="email"]:focus,
+input[type='tel']:focus {
+    outline: none;
+    box-shadow: none;
+    border:#007bff 1px solid;
+}
+.contact .contact-content textarea:focus{
+    outline: none;
+    box-shadow: none;
+    border:#007bff 1px solid;
+}
+
+.contact .contact-content .btns {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.contact .contact-content .btn-submit,
+.btn-back {
+    padding: 10px 15px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    width: 120px;
+}
+
+.contact .contact-content .btn-submit {
+    background-color: #007bff; /* Color del botón de enviar */
+    color: white;
+}
+
+.contact .contact-content .btn-back {
+    background-color: #6c757d; /* Color del botón de volver */
+}
+
+.contact-content .btn-submit:hover,
+.btn-back:hover {
+    opacity: 0.9; /* Efecto hover para los botones */
+}
+
+
+.contact .modal label{
+    color: black;
+}
+.contact .modal .entryc{
+    background-color: transparent;
+    border: gray solid 1px;
+    color: black;
+}
+
+/*STYLOS DE MODAL */
+
+.modal .modal-content {
+    position: relative;
+}
+.modal .modal-content .modal-header, .modal-footer{
+    border: none;
+}
+.modal .modal-content h5, label, input, button, span{
+    color: black;
+}
+.modal .modal-title{
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+}
+.modal .modal-content .modal-header button {
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    font-size: 35px;
+    color: red;
+}
+.modal .modal-body input{
+    border-radius: 2px;
+    border: gray solid 1px;    
+}
+.modal .modal-body textarea {
+    border-radius: 2px;
+    border: gray solid 1px;
+    min-height: 100px;
+}
+.modal .modal-body select {
+    border-radius: 2px;
+    border: gray solid 1px;
+    box-shadow: none;
+}
+.modal .modal-body option{
+    color: black;
+}
+.modal .modal-body input:focus{
+    outline: none;
+    box-shadow: none;
+    border: #007bff solid 1px;
+}
+.modal .modal-body textarea:focus{
+    outline: none;
+    box-shadow: none;
+    border: #007bff solid 1px;
+}
+.modal .modal-body select:focus{
+    outline: none;
+    box-shadow: none;
+    border: #007bff solid 1px;
+}
+.modal .modal-body .div {
+    display: flex;
+    gap: 10px;
+}
+.modal .modal-body .div label {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.modal .txt_del{
+    color: black;
+    text-align: center;
+}
+
+

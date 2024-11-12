@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block body %}
+<div class='login-form'>
+    <div class='container'>
+        <h2 class="text-center">Iniciar Sesión</h2>
+        <form method="POST" class="text-center">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="text" name="username" id="username" required class="form-control">
+                <i class="bi bi-person"></i>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" name="password" id="password" required class="form-control">
+            </div>
+            <p class='msg text-danger'>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {{ message }}  <!-- Muestra el mensaje de error -->
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </p>
+            <button type="submit" class="btn btn-primary">INICIAR SESION</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Página Principal{% endblock %}
+
+{% block body %}
+<div class='home'>
+    <button class='btn-sesion' onclick='closeSesion()'>Cerrar Sesion </button>
+    {% if informacion and informacion.nombres %}
+        <h2 class='hell'>Hello, I am {{ informacion.nombres }} {{ informacion.apellidos }} Developer</h2>
+    {%else %}
+        <h2 class='hell'>Hello, I am Amy Developer</h2>
+    {% endif %}
+    <div class='perfil-foto'>
+        <i class="bi bi-pencil" onclick="toggleEditPhoto()"></i>
+        {% if informacion and informacion.foto_perfil %}
+            <img src="data:image/png;base64,{{ informacion.foto_perfil | b64encode }}" alt="Perfil IMG" class="img-fluid">
+        {% else %}
+            <img src="{{ url_for('static', filename='IMG/pin.jpg') }}" alt="Perfil IMG" class="img-fluid">  <!-- Imagen por defecto -->
+        {% endif %}
+        <input type="file" id="photoInput" style="display:none;" accept="image/*" onchange="uploadPhoto()">
+    </div>
+
+    <div class='iconos'>
+        <i class="bi bi-whatsapp"></i>
+        <img class='img-ico' src="{{ url_for('static', filename='IMG/insta.png') }}" />
+        <i class="bi bi-facebook"></i>
+        <i class="bi bi-github"></i>
+    </div>
+    
+    <div class='menu'>
+        <a href='/formacion'><i class="fas fa-graduation-cap"></i> Formación</a>
+        <a href='/experiencia'><i class="bi bi-pen"></i> Experiencia</a>
+        <a href='/aptitudes'><i class="fas fa-lightbulb"></i> Conocimiento y Aptitudes</a>
+        <a href='/contact'><i class="bi bi-person-lines-fill"></i> Contacto</a>
+    </div>
+
+    <div class='descripcion'>
+        <i class="bi bi-pencil-square" onclick="toggleEditDescription()"></i>
+        <p class='h5'> DESCRIPCION</p>
+        {% if informacion and informacion.descripcion %}
+            <p id="descripcionText">{{ informacion.descripcion | replace('\n', '<br>') | safe }}</p>
+            <textarea id="descripcionInput" style="display:none;" rows="4" required>{{ informacion.descripcion }}</textarea>
+            <div class='h-btn'>
+                <button id="saveButton" class='save-des' style="display:none;" onclick="saveDescription({{ informacion.id }})"><i class="bi bi-check2-all"></i>Guardar</button>
+            </div>        
+        {% else %}
+            <p>No hay descripciones disponibles.</p>
+        {% endif %}
+    </div>
+
+    <div class='pie'>
+        <p>Copyright 2024 - Amy Developer</p>
+    </div>
+    
+
+</div>
+
+<script>
+    function closeSesion () {
+        window.location.href = '/'
+    }
+    
+    function toggleEditPhoto() {
+        document.getElementById("photoInput").click();  // Simula el clic en el input file
+    }
+
+    function uploadPhoto() {
+        var input = document.getElementById("photoInput");
+        var file = input.files[0];
+        
+        if (file) {
+            var formData = new FormData();
+            formData.append('foto_perfil', file);
+
+            fetch('/upload_photo', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.reload();  // Recargar la página para mostrar la nueva foto
+                } else {
+                    alert('Error al subir la imagen.');
+                }
+            });
+        }
+    }
+
+    function toggleEditDescription() {
+        var textElement = document.getElementById("descripcionText");
+        var inputElement = document.getElementById("descripcionInput");
+        var saveButton = document.getElementById("saveButton");
+
+        if (inputElement.style.display === "none") {
+            // Cambiar a modo edición
+            textElement.style.display = "none";
+            inputElement.style.display = "block";
+            saveButton.style.display = "inline-block";
+        } else {
+            // Cambiar a modo lectura
+            textElement.style.display = "block";
+            inputElement.style.display = "none";
+            saveButton.style.display = "none";
+        }
+    }
+
+    function saveDescription(id) {
+        var inputElement = document.getElementById("descripcionInput");
+        var newDescription = inputElement.value;
+
+        // Enviar la nueva descripción al servidor usando fetch
+        fetch(`/edit_descripcion/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ descripcion: newDescription })
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.reload();  // Recargar la página para mostrar la nueva descripción
+            } else {
+                alert('Error al guardar la descripción.');
+            }
+        });
+    }
+</script>
+
+{% endblock %}

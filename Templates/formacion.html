@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}Formacion{% endblock %}
+
+{% block body %}
+<div class='formacion'>
+    <div class="formacion-content">
+        <h2>FORMACION PROFESIONAL</h2>
+        {% if formaciones %}
+            {% for formacion in formaciones %}
+            <div class='box'>
+                <span class='num'>{{ loop.index }}</span>
+                <p class='sub_txt'> {{ formacion.nombre_escuela }}</p>
+                <div class='fechas'>
+                    <p><span>Del: </span> {{formacion.fecha_inicio}}</p>
+                    <p><span>Al: </span> {{formacion.fecha_fin}}</p>
+                </div>
+                <p class='detalle'><span>Detalle:</span>{{ formacion.detalles | replace('\n', '<br>') | safe }}</p>
+                <i class="bi bi-trash3" data-toggle="modal" data-target="#confirmDeleteModal{{ formacion.id }}"></i>
+                <i class="bi bi-pencil-square" data-toggle="modal" data-target="#editModal{{ formacion.id }}"></i>
+            </div>
+
+            <!-- Modal de Confirmación de Borrado -->
+            <div class="modal fade" id="confirmDeleteModal{{ formacion.id }}" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel{{ formacion.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteModalLabel{{ formacion.id }}">Confirmar Borrado</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <p class='txt_del'>¿Estás seguro de que deseas borrar esta formación?</p>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a href="{{ url_for('delete_formacion', id=formacion.id) }}" class="btn btn-danger">Borrar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal de Edición -->
+            <div class="modal fade" id="editModal{{ formacion.id }}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel{{ formacion.id }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form action="{{ url_for('edit_formacion', id=formacion.id) }}" method="POST">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel{{ formacion.id }}">Editar Formación</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class='form-group'>
+                                    <label for='nombre_escuela'>Nombre de la Escuela</label>
+                                    <input type='text' name='nombre_escuela' value='{{ formacion.nombre_escuela }}' class='form-control' required>
+                                </div>
+                                <div class='div'>
+                                    <label>Fecha Inicio
+                                        <input type='date' name='fecha_inicio' class='form-control' value='{{ formacion.fecha_inicio }}' required>
+                                    </label>
+                                    <label>Fecha Fin
+                                        <input type='date' name='fecha_fin' class='form-control' value='{{ formacion.fecha_fin }}' required>
+                                    </label>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control' required>{{ formacion.detalles }}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type='submit' class='btn btn-primary'>Guardar Cambios</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% endfor %}
+        {% else %}
+            <p>No hay datos disponibles.</p>
+        {% endif %}
+
+        <div class='btns'>
+            <!-- Modal para Agregar Nueva Formación -->
+            <div class='modal fade' id='addModal' tabindex='-1' role='dialog' aria-labelledby='addModalLabel' aria-hidden='true'>
+                <div class='modal-dialog' role='document'>
+                    <form action="{{ url_for('add_formacion') }}" method='POST'>
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h5 class='modal-title' id='addModalLabel'>Agregar Nueva Formación</h5>
+                                <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                    <span aria-hidden='true'>&times;</span>
+                                </button>
+                            </div>
+                            <div class='modal-body'>
+                                <div class='form-group'>
+                                    <label for='nombre_escuela'>Nombre de la Escuela</label>
+                                    <input type='text' name='nombre_escuela' class='form-control' required>
+                                </div>
+                                <div class='div'>
+                                    <label>Fecha Inicio
+                                        <input type='date' name='fecha_inicio' class='form-control' required>
+                                    </label>
+                                    <label>Fecha Fin
+                                        <input type='date' name='fecha_fin' class='form-control' required>
+                                    </label>
+                                </div>
+                                <div class='form-group'>
+                                    <label for='detalles'>Detalles</label>
+                                    <textarea name='detalles' class='form-control' required></textarea>
+                                </div>
+                            </div>
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-secondary' data-dismiss='modal'>Cancelar</button>
+                                <button type='submit' class='btn btn-primary'>Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <button class='btn-edit' data-toggle='modal' data-target='#addModal'><i class='bi bi-plus-square-dotted'></i> AGREGAR</button>
+            <button type="button" onclick='volver()' class="volver"> < VOLVER</button>
+        </div>
+    </div>
+
+    <!-- Script para volver a la página anterior -->
+    <script>
+        function volver() {
+            window.location.href = "/home";
+        }
+    </script>
+
+{% block scripts %}
+<!-- Aquí puedes incluir scripts específicos para esta plantilla -->
+{% endblock %}
+    
+</div>
+
+{% endblock %}

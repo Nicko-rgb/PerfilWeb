@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block body %}
+<div class='contact'>
+    <div class="contact-content">
+        <div class='me'>
+            <h4>Mi Información</h4>
+            {% if informacion and informacion.foto_perfil %}
+                <img src="data:image/png;base64,{{ informacion.foto_perfil | b64encode }}" alt="Perfil IMG" class="img-fluid">
+            {% else %}
+                <img src="{{ url_for('static', filename='IMG/pin.jpg') }}" alt="Perfil IMG" class="img-fluid">  <!-- Imagen por defecto -->
+            {% endif %}
+            <div>
+                <i class="bi bi-pencil" data-toggle="modal" data-target="#editModal"></i>
+            </div>
+            <p>{{ informacion.nombres }} {{ informacion.apellidos }} <i class="bi bi-person"></i></p>
+            <p>{{ informacion.correo }} <i class="bi bi-envelope"></i></p>
+            <p>{{ informacion.ubicacion }}<i class="bi bi-geo-alt"></i></p>
+            <div>
+                <p>{{ informacion.idioma }}</p>
+                <p>{{ informacion.telefono }}<i class="bi bi-telephone"></i></p>
+            </div>
+            <div class='btns'>
+                <button class='volver' onclick='volver()'> < Volver</button>
+                <button id="contactButton">Contáctame</button>
+            </div>
+        </div>
+
+        <!-- Modal para editar información -->
+        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form action="{{ url_for('update_info') }}" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Editar Información</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class='div'>
+                                <label for="nombres">Nombres:
+                                    <input style="background-color: transparent; border: gray solid 1px; color: black;" type="text" id="nombres" name="nombres" value="{{ informacion.nombres }}" required>
+                                </label>
+                                <label for="apellidos">Apellidos:
+                                    <input style="background-color: transparent; border: gray solid 1px; color: black;" type="text" id="apellidos" name="apellidos" value="{{ informacion.apellidos }}" required>
+                                </label>
+                            </div>
+                            <div class='form-group'>
+                                <label for="correo">Correo Electrónico:</label>
+                                <input style="background-color: transparent; border: gray solid 1px; color: black;" type="email" id="correo" name="correo" value="{{ informacion.correo }}" required>
+                            </div>
+                            <div class='form-group'>
+                                <label for="ubicacion">Ubicacion:</label>
+                                <input style="background-color: transparent; border: gray solid 1px; color: black;" type="text" id="ubicacion" name="ubicacion" value="{{ informacion.ubicacion }}" required>
+                            </div>
+                            <div class='div'>
+                                <label for='telefono'>Teléfono:
+                                    <input style="background-color: transparent; border: gray solid 1px; color: black;" type="tel" id="telefono" name="telefono" value="{{ informacion.telefono }}" required>
+                                </label>
+                                <label for='idioma'>Idioma:
+                                    <input style="background-color: transparent; border: gray solid 1px; color: black;" type="text" id="idioma" name="idioma" value="{{ informacion.idioma }}" required>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Formulario de contacto -->
+         <div class='frm' id='frm' style="display:none;">
+            <form class='form-c' id="contactForm" action="{{ url_for('contact') }}" method="POST">
+                <h2>Contáctame</h2>
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                </div>
+                <div class='form-group'>
+                    <label for='correo'>Correo Electrónico:</label>
+                    <input type='email' id='correo' name='correo' required placeholder='Tu correo electrónico'>
+                </div>
+                <div class='form-group'>
+                    <label for='telefono'>Teléfono:</label>
+                    <input type='tel' id='telefono' name='telefono' required placeholder='Tu número de teléfono'>
+                </div>
+                <div class='form-group'>
+                    <label for='mensaje'>Mensaje:</label>
+                    <textarea id='mensaje' name='mensaje' rows='5' required placeholder='Escribe tu mensaje aquí'></textarea>
+                </div>
+                <div class='btns'>
+                    <button type='submit' class='btn-submit'><i class='bi bi-send'></i> Enviar</button>
+                    <button type='button' id='close-c' class='btn-back'>Cerrar</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- Script para manejar el formulario de contacto -->
+    <script>
+        document.getElementById("contactButton").onclick = function() {
+            document.getElementById("frm").style.display = "block"; // Mostrar el formulario
+        };
+        document.getElementById('close-c').onclick = function() {
+            document.getElementById("frm").style.display = "none"; // Ocultar el formulario
+        }
+
+        function volver() {
+            window.location.href = "/home";
+        }
+    </script>
+
+</div>
+
+{% endblock %}
